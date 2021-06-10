@@ -1,5 +1,4 @@
 
-
 class Player:
     def __init__(self, symbol="@"):
         self._symbol = symbol
@@ -32,11 +31,22 @@ class Player:
         if map[new_y][new_x] == "." or map[new_y][new_x] == "x" :
             ret =True
             map[new_y][new_x] = self._symbol
-            map[self._y][self._x] = "x"
-            data = [{"i": f"{self._y}", "j":f"{self._x}", "content":"x"}, {"i": f"{new_y}", "j":f"{new_x}", "content":self._symbol}]
+            map[self._y][self._x] = "."
+            data = [{"i": f"{self._y}", "j":f"{self._x}", "content":"."}, {"i": f"{new_y}", "j":f"{new_x}", "content":self._symbol}]
             self._x = new_x
             self._y = new_y
         else:
             ret = False
             data = []
+        
+
+        #si le joueur est sur un monstre
+        if map[new_y][new_x] == "x":
+            
+            map[new_y][new_x] = "."
+            map[self._y][self._x] = "."
+            self.health_points = max(0,self.health_points - 20)
+            data = [{"i": f"{self._y}", "j":f"{self._x}", "content":"."}, {"i": f"{new_y}", "j":f"{new_x}", "content":'M'}]
+           
+
         return data, ret

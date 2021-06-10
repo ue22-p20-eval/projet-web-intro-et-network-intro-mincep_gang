@@ -9,12 +9,12 @@
 # work. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 
 from __future__ import print_function
+from .monsters import Monsters
 import random
 
+
 CHARACTER_TILES = {'stone': '#',
-
                     'floor': '.',
-
                     'wall': '#'}
 
 class Generator():
@@ -32,6 +32,12 @@ class Generator():
         self.room_list = []
         self.corridor_list = []
         self.tiles_level = []
+
+    def gen_monster(self,game):
+        #Création des mosntres sur la carte
+        monster = Monsters
+        monster.initPos(monster, game._map, game.height, game.width, game._player)
+        return monster
     
     def gen_room(self):
         x, y, w, h = 0, 0, 0, 0
@@ -244,6 +250,8 @@ class Generator():
         #print('Room List: ', self.room_list)
         #print('\nCorridor List: ', self.corridor_list)
         #[print(row) for row in self.tiles_level]
+
+
 
 if __name__ == '__main__':
     gen = Generator()

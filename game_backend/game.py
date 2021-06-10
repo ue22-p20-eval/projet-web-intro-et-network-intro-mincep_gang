@@ -1,5 +1,6 @@
 from .map_generator import Generator
 from .player import Player
+from .monsters import Monsters
 
 
 class Game:
@@ -11,9 +12,18 @@ class Game:
 
         self._player = Player()
         self._player.initPos( self._map )
+        self.height = self._generator.height
+        self.width = self._generator.width
+        #monstres
+        self._Monsters = self._generator.gen_monster(self)
 
     def getMap(self):
         return self._map
 
     def move(self, dx, dy):
         return self._player.move(dx, dy, self._map)
+
+    def update_monster(self):
+        monster = self._Monster
+        data = monster.move_monsters(self._map)
+        return data
