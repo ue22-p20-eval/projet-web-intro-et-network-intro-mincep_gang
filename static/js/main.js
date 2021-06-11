@@ -55,5 +55,25 @@ window.addEventListener("DOMContentLoaded", (event) => {
             span_to_modif.textContent = data[i].content;
         }
     });
+    socket.on("RAS",function(data){
+        var bar = document.getElementById("status_bar");
+        bar.textContent="Keep going";
+    });
+
+    socket.on("update_health", function(data) {
+        console.log("A monster!");
+        player_health = data.health;
+        var hp = document.getElementById("health_points");
+        hp.innerHTML="Health : " + player_health +"/100";
+        var bar = document.getElementById("status_bar");
+        bar.textContent="You killed the monster, but you lost "+data.hp_loss+" health points..";
+    });
+
+    socket.on("invalid_movement",function(data){
+        console.log("Invalid movement");
+        var bar = document.getElementById("status_bar");
+        bar.textContent="There is a wall";
+    });
+
 
 });

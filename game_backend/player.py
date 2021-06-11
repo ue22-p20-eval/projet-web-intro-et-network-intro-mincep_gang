@@ -1,9 +1,11 @@
+import random
 
 class Player:
     def __init__(self, symbol="@"):
         self._symbol = symbol
         self._x = None
         self._y = None
+        self.health_points=100
 
     def initPos(self, _map):
         n_row = len(_map)
@@ -27,8 +29,12 @@ class Player:
     def move(self, dx, dy, map):
         new_x = self._x + dx
         new_y = self._y + dy
+        hp_loss=0
 
         if map[new_y][new_x] == "." or map[new_y][new_x] == "x" :
+            if map[new_y][new_x] == "x":            #si le joueur est sur un monstre, il passe quand même mais perd de la vie
+                hp_loss= random.randint(10,20)
+                self.health_points = max(0,self.health_points - hp_loss)
             ret =True
             map[new_y][new_x] = self._symbol
             map[self._y][self._x] = "."
@@ -39,14 +45,7 @@ class Player:
             ret = False
             data = []
         
+        return data, ret, hp_loss
 
-        #si le joueur est sur un monstre
-        if map[new_y][new_x] == "x":
-            
-            map[new_y][new_x] = "."
-            map[self._y][self._x] = "."
-            self.health_points = max(0,self.health_points - 20)
-            data = [{"i": f"{self._y}", "j":f"{self._x}", "content":"."}, {"i": f"{new_y}", "j":f"{new_x}", "content":'M'}]
-           
-
-        return data, ret
+    def get_health_points(self) :
+        return self.health_points

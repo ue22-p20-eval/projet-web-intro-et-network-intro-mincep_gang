@@ -27,3 +27,6 @@ class Game:
         monster = self._Monster
         data = monster.move_monsters(self._map)
         return data
+
+    def get_player_health(self) :
+        return self._player.get_health_points()

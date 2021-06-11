@@ -24,10 +24,17 @@ def on_move_msg(json, methods=["GET", "POST"]):
     dx = json['dx']
     dy = json["dy"]
     
-    data, ret = game.move(dx,dy)
+    data, ret, hp_loss = game.move(dx,dy)
+    player_health = game.get_player_health()
     if ret:
         socketio.emit("response", data)
-
+        if hp_loss !=0:
+            socketio.emit("update_health", {"health" : player_health,"hp_loss":f'{hp_loss}'})
+        else:
+            socketio.emit("RAS",data)
+    else:
+        socketio.emit("invalid_movement", data)
+    
                 
 @socketio.on("update_monster")
 def monster_move():
