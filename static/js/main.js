@@ -74,6 +74,17 @@ window.addEventListener("DOMContentLoaded", (event) => {
         var bar = document.getElementById("status_bar");
         bar.textContent="There is a wall";
     });
+    socket.on("monster_response",function(datas){
+        data=datas[0]
+                for( var k=0; i<2; i++){
+                    var cell_id = "cell " + data[k].i + "-" + data[k].j;
+                    var span_to_modif = document.getElementById(cell_id);
+                    span_to_modif.textContent = data[k].content;            
+                }
+            
+        
+        
+    });
 
 
 });

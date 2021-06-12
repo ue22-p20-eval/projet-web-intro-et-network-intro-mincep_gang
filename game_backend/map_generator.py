@@ -34,10 +34,12 @@ class Generator():
         self.tiles_level = []
 
     def gen_monster(self,game):
-        #Création des mosntres sur la carte
-        monster = Monsters
-        monster.initPos(monster, game._map, game.height, game.width, game._player)
-        return monster
+        #Création des monstres sur la carte
+        monsters=[]
+        for i in range(10):
+            monsters.append(Monsters)
+            monsters[i].initPos(monsters[i], game._map, game.height, game.width, game._player)
+        return monsters
     
     def gen_room(self):
         x, y, w, h = 0, 0, 0, 0

@@ -24,9 +24,17 @@ class Game:
         return self._player.move(dx, dy, self._map)
 
     def update_monster(self):
-        monster = self._Monster
-        data = monster.move_monsters(self._map)
-        return data
+        datas=[]
+        monsters = self._Monsters
+        for i in range(len(monsters)):
+            monster=monsters[i]
+            monster.move_monsters(monster,self._map)
+            data=monster.move_monsters(monster,self._map)
+            print(data)
+            datas.append(data)
+           # if data[1]!=0:
+            #    del monsters[i]
+        return datas
 
     def get_player_health(self) :
         return self._player.get_health_points()

@@ -1,8 +1,8 @@
 from flask import Flask, render_template 
 from flask_socketio import SocketIO
 from game_backend import Game
-from time import time
-
+import time
+import threading
 
 
 app = Flask(__name__)
@@ -10,7 +10,6 @@ socketio = SocketIO(app)
 game = Game()
 
 
-time = time()
 
 
 @app.route("/")
@@ -34,8 +33,25 @@ def on_move_msg(json, methods=["GET", "POST"]):
             socketio.emit("RAS",data)
     else:
         socketio.emit("invalid_movement", data)
-    
-                
+
+
+def monster_move():    
+    while True:  
+        print("ok")
+        data_monstres=game.update_monster()
+        socketio.emit("monster_response", data_monstres)
+        #hp_loss=0
+        #for data_monstre in data_monstres:
+         #   hp_loss+=data_monstre[1]
+        #player_health=game.get_player_health()
+        #player_health-=hp_loss
+        #if hp_loss!=0:
+            #socketio.emit("update_health", {"health" : player_health,"hp_loss":f'{hp_loss}'})
+        time.sleep(2)
+
+
+threading.Thread(target=monster_move).start()
+"""
 @socketio.on("update_monster")
 def monster_move():
     
@@ -47,8 +63,7 @@ def monster_move():
         socketio.emit("monster_response", data_monstre)
         time = 0
 
+"""
 
 if __name__=="__main__":
     socketio.run(app, port=5001)
-
-

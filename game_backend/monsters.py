@@ -30,8 +30,8 @@ class Monsters:
         move_allowed = False
         while not(move_allowed):
             #choix des dx et dy
-            dx = random()
-            dy = random()
+            dx = random.random()
+            dy = random.random()
             if dx < 0.5 :
                 self._dx = -1
             elif dx > 0.5 :
@@ -44,20 +44,18 @@ class Monsters:
                 self._dy = 1
             else :
                 self._dy = 0
-            print(dx, dy)
 
             new_y = self._y + self._dy
             new_x = self._x + self._dx
 
             #test si on peut bien déplacer le monstre dans cette direction
-            if map[new_y][new_x] == "." or map[new_y][new_x] == "@" :
+            if _map[new_y][new_x] == ".":  
                 move_allowed =True
-                map[new_y][new_x] = self._symbol
-                map[self._y][self._x] = "."
-                data = [{"i": f"{self._y}", "j":f"{self._x}", "content":"."}, {"i": f"{new_y}", "j":f"{new_x}", "content":self._symbol}]
+                _map[new_y][new_x] = "x"
+                _map[self._y][self._x] = "."
+                data = [{"i": f"{self._y}", "j":f"{self._x}", "content":"."}, {"i": f"{new_y}", "j":f"{new_x}", "content":"x"}]
                 self._x = new_x
                 self._y = new_y
-            
 
         return data
        
