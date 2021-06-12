@@ -13,9 +13,9 @@ from .monsters import Monsters
 import random
 
 
-CHARACTER_TILES = {'stone': '#',
-                    'floor': '.',
-                    'wall': '#'}
+CHARACTER_TILES = {'stone': chr(0x1F4E6),
+                    'floor':chr(0x1F532),
+                    'wall': chr(0x1F4E6)}
 
 class Generator():
     def __init__(self, width=64, height=64, max_rooms=15, min_room_xy=5, max_room_xy=10, rooms_overlap=False, random_connections=1,random_spurs=3, tiles=CHARACTER_TILES):
@@ -37,8 +37,9 @@ class Generator():
         #Création des monstres sur la carte
         monsters=[]
         for i in range(10):
-            monsters.append(Monsters)
-            monsters[i].initPos(monsters[i], game._map, game.height, game.width, game._player)
+            monster=Monsters(symbol=chr(0x1F47B))
+            monster.initPos(game._map, game.height, game.width, game._player)
+            monsters.append(monster)
         return monsters
     
     def gen_room(self):

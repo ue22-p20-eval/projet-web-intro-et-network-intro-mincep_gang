@@ -10,7 +10,7 @@ class Game:
         self._generator.gen_tiles_level()
         self._map = self._generator.tiles_level
 
-        self._player = Player()
+        self._player = Player(symbol=chr(0x1F435))
         self._player.initPos( self._map )
         self.height = self._generator.height
         self.width = self._generator.width
@@ -28,13 +28,19 @@ class Game:
         monsters = self._Monsters
         for i in range(len(monsters)):
             monster=monsters[i]
-            monster.move_monsters(monster,self._map)
-            data=monster.move_monsters(monster,self._map)
-            print(data)
+            data=monster.move_monsters(self._map)
             datas.append(data)
-           # if data[1]!=0:
-            #    del monsters[i]
         return datas
 
     def get_player_health(self) :
         return self._player.get_health_points()
+    
+    def conflict(self):
+        conflicts=[]
+        for monster in self._Monsters:
+            if  (monster._x,monster._y) ==(self._player._x,self._player._y):
+                print("conflit!!!")
+                conflicts.append(monster)
+        return conflicts
+    def get_monsters(self):
+        return self._Monsters

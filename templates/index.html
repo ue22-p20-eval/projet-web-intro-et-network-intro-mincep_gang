@@ -5,9 +5,10 @@
         <script type="text/javascript" src={{ url_for("static", filename="js/main.js") }}></script>
     </head>
     <body>
+        <div id="game_over">
         <div> <b> Rogue Flask </b></div>
         <p id = "health_points">Health : 100/100</p>
-        <p id="status_bar"> Welcome to our new hero!"</p>
+        <p id="status_bar"> Welcome to our brave hero!"</p>
         <div class="flexbox">
             <div class="thekeypad">
                 <div class="key"></div>
@@ -31,6 +32,7 @@
                 {% endfor %}
             </div>
         </div>
-
+       </div>
+       <h1><div id="game_over message"> </div></h1>
     </body>
 </html>

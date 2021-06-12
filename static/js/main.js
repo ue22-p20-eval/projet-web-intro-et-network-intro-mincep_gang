@@ -66,7 +66,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
         var hp = document.getElementById("health_points");
         hp.innerHTML="Health : " + player_health +"/100";
         var bar = document.getElementById("status_bar");
-        bar.textContent="You killed the monster, but you lost "+data.hp_loss+" health points..";
+        bar.textContent="A ghost! Get out of here, you already lost "+data.hp_loss+" health points..";
     });
 
     socket.on("invalid_movement",function(data){
@@ -75,15 +75,23 @@ window.addEventListener("DOMContentLoaded", (event) => {
         bar.textContent="There is a wall";
     });
     socket.on("monster_response",function(datas){
-        data=datas[0]
-                for( var k=0; i<2; i++){
+        for(var data of datas){
+        console.log(data)
+                for( let k=0; k<2; k++){
                     var cell_id = "cell " + data[k].i + "-" + data[k].j;
                     var span_to_modif = document.getElementById(cell_id);
                     span_to_modif.textContent = data[k].content;            
                 }
+        }
             
         
         
+    });
+
+    socket.on("game_over",function(data){
+        var end=document.getElementById("game_over");
+        end.textContent="";
+
     });
 
 
