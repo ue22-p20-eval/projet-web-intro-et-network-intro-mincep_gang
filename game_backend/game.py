@@ -16,6 +16,7 @@ class Game:
         self.width = self._generator.width
         #monstres
         self._Monsters = self._generator.gen_monster(self)
+        self._Items= self._generator.gen_item(self)
 
     def getMap(self):
         return self._map

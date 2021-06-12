@@ -10,6 +10,7 @@
 
 from __future__ import print_function
 from .monsters import Monsters
+from .items import Items
 import random
 
 
@@ -41,6 +42,15 @@ class Generator():
             monster.initPos(game._map, game.height, game.width, game._player)
             monsters.append(monster)
         return monsters
+
+    def gen_item(self,game):
+        items=[]
+        for i in range(20):
+            item=Items(symbol=chr(0x1F34C))
+            item.initPos(game._map, game.height, game.width, game._player)
+            items.append(item)
+        return items
+
     
     def gen_room(self):
         x, y, w, h = 0, 0, 0, 0
