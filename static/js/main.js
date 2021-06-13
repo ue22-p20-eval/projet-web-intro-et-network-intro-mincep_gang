@@ -102,9 +102,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
     socket.on("update_health1", function(data) {
         console.log("A monster!");
-        player_health = data.health;
-        var hp = document.getElementById("health_points_1");
-        hp.innerHTML="Health : " + player_health +"/100";
+        update_health(1, data)
         var bar = document.getElementById("status_bar_1");
         bar.textContent="";
         bar.insertAdjacentHTML('afterbegin','A ghost? Run! It made you lose  '+data.hp_loss+' health points..');
@@ -112,9 +110,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
     socket.on("update_health2", function(data) {
         console.log("A monster!");
-        player_health = data.health;
-        var hp = document.getElementById("health_points_2");
-        hp.innerHTML="Health : " + player_health +"/100";
+        update_health(2, data)
         var bar = document.getElementById("status_bar_2");
         bar.textContent="";
         bar.insertAdjacentHTML('afterbegin','A ghost? Run! It made you lose  '+data.hp_loss+' health points..');
@@ -122,13 +118,11 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
     socket.on("update_both_health", function(data){
         console.log("Internal conflict!");
-        var hp1 = document.getElementById("health_points_1");
-        hp1.innerHTML="Health : " + data.health1 +"/100";
+        update_health(1, data)
         var bar1 = document.getElementById("status_bar_1");
         bar1.textContent="";
         bar1.insertAdjacentHTML('afterbegin','That was a good fight! But you both lose 30 health points..');
-        var hp2 = document.getElementById("health_points_2");
-        hp2.innerHTML="Health : " + data.health2 +"/100";
+        update_health(2, data)
         var bar2 = document.getElementById("status_bar_2");
         bar2.textContent="";
         bar2.insertAdjacentHTML('afterbegin','That was a good fight! But you both lose 30 health points..');
@@ -137,7 +131,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
     socket.on("update_bananas1", function(data) {
         var hp = document.getElementById("bananas_1");
-        hp.innerHTML="Bananas : " + data.bananas;
+        hp.innerHTML="Bananas : " + data.bananas + " &#x1F34C;";
         var bar = document.getElementById("status_bar_1");
         bar.textContent="A banana! What a lucky monkey !";
     });
@@ -145,7 +139,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
     socket.on("update_bananas2", function(data) {
         var hp = document.getElementById("bananas_2");
-        hp.innerHTML="Bananas : " + data.bananas;
+        hp.innerHTML="Bananas : " + data.bananas + " &#x1F34C;";
         var bar = document.getElementById("status_bar_2");
         bar.textContent="A banana! Even frogs like it !";
     });
@@ -205,4 +199,17 @@ window.addEventListener("DOMContentLoaded", (event) => {
         end.textContent="";
         end.insertAdjacentHTML('afterbegin','<h2><div class="game_over_screen"><h1> <div class= "end_message">Game over <br><br>' + death +' died !</div></h1><h3> <div class= "player_1_results"> <h2><div id= "player_1_profile"> Player 1:</div></h2><div id= "player_1_health"> Remaining health : ' + data.health1 + '</div><div id= "player_1_bananas">Bananas : ' + data.bananas1 + '</div></div><div id= "player_2_results"><h2><div id= "player_2_profile"> Player 2:</div></h2><div id= "player_2_health"> Remaining health : ' + data.health2 + '</div> <div id= "player_2_bananas">Bananas : ' + data.bananas2 + '</div></div> </h3> </div></h2>');
     });
+
+    function update_health(player_id, data){
+        player_health = data.health;
+        var id_HTML = "health_points_" + String(player_id);
+        var hp = document.getElementById(id_HTML);
+        var i = player_health%10;
+        var hp_car = "Health : ";
+        for (var j=0; j<i; j++){
+            hp_car = hp_car + "&#128150;";
+        }
+        hp.innerHTML = hp_car;
+    };
+
 });
