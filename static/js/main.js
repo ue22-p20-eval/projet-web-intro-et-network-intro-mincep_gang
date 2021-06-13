@@ -184,6 +184,19 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
     });
 
+    socket.on("change_map", function(data){
+        var map = data.map
+        var nrow = data.n_rows
+        var ncol = data.n_columns
+        for ( let i=0; i<nrow; i++){
+            for(let j=0; j<ncol; j++){
+                var cell_id = "cell " + i + "-" + j;
+                    var span_to_modif = document.getElementById(cell_id);
+                    span_to_modif.textContent = map[i][j];      
+            }
+        } 
+    })
+
     socket.on("game_over_1",function(data){
         console.log("Game over player 1");
         death="Player 1";

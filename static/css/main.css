@@ -92,17 +92,6 @@ body{
     margin-top: -50px;
 }
 
-#level{
-    font-family: fantasy;
-    color: black;
-}
-
-.information_2{
-    grid-column: 3;
-    grid-row: 1;
-    ;text-align: center;
-
-}
 .keypad_btn{
     background-color: rgb(247, 4, 4);
     opacity: 0.75;

@@ -101,8 +101,8 @@ def request_waiter():
         nb_monsters, nb_bananas, nb_hearts= levels[json['level']-1]
         game = Game(number_monsters=nb_monsters,number_bananas=nb_bananas,number_hearts=nb_hearts)
         map = game.getMap()
-        return render_template("index.html", mapdata=map, n_row=len(map), n_col=len(map[0]))
-        socketio.run(app, port=5001)
+        socketio.emit("change_map",{"map" : map, "n_rows": map.width, "n_columns": map.height})
+        
 
 
 

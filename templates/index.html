@@ -9,67 +9,68 @@
     <body>          
         <div id="game_over">
 
-    <div class="information">
+            <div class="information">
 
-        <div class=information_1>
-        <h3><p id = player_1> <b>Player 1</b></p></h3>
-        <p id = "health_points_1">Health : &#128150; &#128150; &#128150; &#128150; &#128150; &#128150; &#128150; &#128150; &#128150; &#128150;</p>
-        <p id = "bananas_1">Bananas : 0 &#x1F34C;</p>
-        <h4><p id="status_bar_1"> Welcome player 1 !</p></h4>
-        </div>
+                <div class="information_1">
+                    <h3><p id = player_1> <b>Player 1</b></p></h3>
+                        <p id = "health_points_1">Health : &#128150; &#128150; &#128150; &#128150; &#128150; &#128150; &#128150; &#128150; &#128150; &#128150;</p>
+                        <p id = "bananas_1">Bananas : 0 &#x1F34C;</p>
+                    <h4><p id="status_bar_1"> Welcome player 1 !</p></h4>
+                </div>
 
-        <b>
-            <div class="title">
-                <h1>Banana Rush</h1> 
-                  <div id="subtitle"> <h3>Collect bananas, but avoid ghosts...</h3></div>
-                  <h3><div id="level"> Level 1 </div></h3>
-        </b>
-        
-       
-        <div class=information_2>
-        <h3><p id = player_2> <b>Player 2</b></p></h3>
-        <p id = "health_points_2">Health : &#128150; &#128150; &#128150; &#128150; &#128150; &#128150; &#128150; &#128150; &#128150; &#128150;</p>
-        <p id = "bananas_2">Bananas : 0 &#x1F34C;</p>
-        <h4><p id="status_bar_2"> Welcome player 2 !</p></h4>
-        </div>
-        
-    </div>
-
-        
-        <div class="flexbox">
-            <div class="thekeypad_1">
-                <div class="key"></div>
-                <div class="key"><input id="go_n1" class="keypad_btn" type="button" value="&#9650"> </div>
-                <div class="key"></div>
-                <div class="key"><input id="go_w1" class="keypad_btn" type="button" value="&#9664"></div>
-                <div class="key"></div>
-                <div class="key"><input id="go_e1" class="keypad_btn" type="button" value="&#9654"></div>
-                <div class="key"></div>
-                <div class="key"><input id="go_s1" class="keypad_btn" type="button" value="&#9660"></div>
-                <div class="key"></div>
+                <b>
+                    <div class="title">
+                        <h2>Banana Rush</h2> 
+                        <div id="subtitle"> <h3>Collect bananas, but avoid ghosts...</h3></div>
+                        <h4><div id="level"> Level 1 </div></h4>
+                    </div>
+                </b>
+                
+            
+                <div class="information_2">
+                    <h3><p id = player_2> <b>Player 2</b></p></h3>
+                    <p id = "health_points_2">Health : &#128150; &#128150; &#128150; &#128150; &#128150; &#128150; &#128150; &#128150; &#128150; &#128150;</p>
+                    <p id = "bananas_2">Bananas : 0 &#x1F34C;</p>
+                    <h4><p id="status_bar_2"> Welcome player 2 !</p></h4>
+                </div>
+                
             </div>
 
-            <div id="console" style="font-family: monospace;">
-                {% for i in range(n_row) %}
-                <div style="height:18px">
-                    {% for j in range(n_col) %}
-                    <span id="{{ 'cell {}-{}'.format(i,j) }}"> {{ mapdata[i][j] }} </span>
+            
+            <div class="flexbox">
+                <div class="thekeypad_1">
+                    <div class="key"></div>
+                    <div class="key"><input id="go_n1" class="keypad_btn" type="button" value="&#9650"> </div>
+                    <div class="key"></div>
+                    <div class="key"><input id="go_w1" class="keypad_btn" type="button" value="&#9664"></div>
+                    <div class="key"></div>
+                    <div class="key"><input id="go_e1" class="keypad_btn" type="button" value="&#9654"></div>
+                    <div class="key"></div>
+                    <div class="key"><input id="go_s1" class="keypad_btn" type="button" value="&#9660"></div>
+                    <div class="key"></div>
+                </div>
+
+                <div id="console" style="font-family: monospace;">
+                    {% for i in range(n_row) %}
+                    <div style="height:18px">
+                        {% for j in range(n_col) %}
+                        <span id="{{ 'cell {}-{}'.format(i,j) }}"> {{ mapdata[i][j] }} </span>
+                        {% endfor %}
+                    </div>
                     {% endfor %}
                 </div>
-                {% endfor %}
-            </div>
-            <div class="thekeypad_2">
-                <div class="key"></div>
-                <div class="key"><input id="go_n2" class="keypad_btn" type="button" value="&#9650"> </div>
-                <div class="key"></div>
-                <div class="key"><input id="go_w2" class="keypad_btn" type="button" value="&#9664"></div>
-                <div class="key"></div>
-                <div class="key"><input id="go_e2" class="keypad_btn" type="button" value="&#9654"></div>
-                <div class="key"></div>
-                <div class="key"><input id="go_s2" class="keypad_btn" type="button" value="&#9660"></div>
-                <div class="key"></div>
+                <div class="thekeypad_2">
+                    <div class="key"></div>
+                    <div class="key"><input id="go_n2" class="keypad_btn" type="button" value="&#9650"> </div>
+                    <div class="key"></div>
+                    <div class="key"><input id="go_w2" class="keypad_btn" type="button" value="&#9664"></div>
+                    <div class="key"></div>
+                    <div class="key"><input id="go_e2" class="keypad_btn" type="button" value="&#9654"></div>
+                    <div class="key"></div>
+                    <div class="key"><input id="go_s2" class="keypad_btn" type="button" value="&#9660"></div>
+                    <div class="key"></div>
+                </div>
             </div>
         </div>
-       </div>
     </body>
 </html>
