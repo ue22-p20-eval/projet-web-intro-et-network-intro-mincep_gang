@@ -5,6 +5,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
     document.onkeydown = function(e){
         switch(e.keyCode){
+            //flèches directionnelles pour J1
             case 37:
                 socket.emit("move1", {dx:-1, dy:0});
                 break;
@@ -17,10 +18,11 @@ window.addEventListener("DOMContentLoaded", (event) => {
             case 40:
                 socket.emit("move1", {dx:0, dy:1});
                 break;
-            case 65:
+            // Q Z D S pour J2
+            case 81:
                 socket.emit("move2", {dx:-1, dy:0});
                 break;
-            case 87:
+            case 90:
                 socket.emit("move2", {dx:0, dy:-1});
                 break;
             case 68:
@@ -82,7 +84,8 @@ window.addEventListener("DOMContentLoaded", (event) => {
         socket.emit("move2", {dx:1, dy:0});
     };
 
-    socket.on("response", function(data){
+    //actualisation de la position du joeur sur le frontend
+    socket.on("response", function(data){    
         console.log(data);
         for( var i=0; i<2; i++){
             var cell_id = "cell " + data[i].i + "-" + data[i].j;
@@ -100,115 +103,137 @@ window.addEventListener("DOMContentLoaded", (event) => {
         bar.textContent="Keep looking for bananas";
     });
 
-    socket.on("update_health1", function(data) {
+    //actualisation des PV de J1 après rencontre avec un monstre
+    socket.on("update_health1", function(data) {  
         console.log("A monster!");
-        update_health(1, data)
+        update_health(1, data.health)
         var bar = document.getElementById("status_bar_1");
         bar.textContent="";
-        bar.insertAdjacentHTML('afterbegin','A ghost? Run! It made you lose  '+data.hp_loss+' health points..');
+        bar.insertAdjacentHTML('afterbegin','A ghost? Run! It made you lose  '+data.hp_loss+' health point...');
     });
 
-    socket.on("update_health2", function(data) {
+    //Pareil pour J2
+    socket.on("update_health2", function(data) {   
         console.log("A monster!");
-        update_health(2, data)
+        update_health(2, data.health)
         var bar = document.getElementById("status_bar_2");
         bar.textContent="";
-        bar.insertAdjacentHTML('afterbegin','A ghost? Run! It made you lose  '+data.hp_loss+' health points..');
+        bar.insertAdjacentHTML('afterbegin','A ghost? Run! It made you lose  '+data.hp_loss+' health point...');
     });
 
-    socket.on("update_both_health", function(data){
+    // Actualisation des PV de J1 et J2 après rencontre entre eux
+    socket.on("update_both_health", function(data){   
         console.log("Internal conflict!");
-        update_health(1, data)
+        update_health(1, data.health1)
         var bar1 = document.getElementById("status_bar_1");
         bar1.textContent="";
-        bar1.insertAdjacentHTML('afterbegin','That was a good fight! But you both lose 30 health points..');
-        update_health(2, data)
+        bar1.insertAdjacentHTML('afterbegin','That was a good fight! But you both lose 2 health points...');
+        update_health(2, data.health2)
         var bar2 = document.getElementById("status_bar_2");
         bar2.textContent="";
-        bar2.insertAdjacentHTML('afterbegin','That was a good fight! But you both lose 30 health points..');
+        bar2.insertAdjacentHTML('afterbegin','That was a good fight! But you both lose 2 health points...');
 
     });
 
-    socket.on("update_bananas1", function(data) {
-        var hp = document.getElementById("bananas_1");
-        hp.innerHTML="Bananas : " + data.bananas + " &#x1F34C;";
+    // Actualisation bananes J1
+    socket.on("update_bananas1", function(data) {   
+        var bn = document.getElementById("bananas_1");
+        bn.innerHTML="Bananas : " + data.bananas + " &#x1F34C;";
         var bar = document.getElementById("status_bar_1");
         bar.textContent="A banana! What a lucky monkey !";
     });
 
-
-    socket.on("update_bananas2", function(data) {
-        var hp = document.getElementById("bananas_2");
-        hp.innerHTML="Bananas : " + data.bananas + " &#x1F34C;";
+     // Pareil J2
+    socket.on("update_bananas2", function(data) {  
+        var bn = document.getElementById("bananas_2");
+        bn.innerHTML="Bananas : " + data.bananas + " &#x1F34C;";
         var bar = document.getElementById("status_bar_2");
         bar.textContent="A banana! Even frogs like it !";
     });
 
-    socket.on("update_health_good1", function(data){
+    // Actualisation PV J1 après coeur
+    socket.on("update_health_good1", function(data){  
         console.log("Heart!");
-        player_health=data.health
-        var hp = document.getElementById("health_points_1");
-        hp.innerHTML="Health : " + player_health +"/100";
+        update_health(1,data.health)
         var bar = document.getElementById("status_bar_1");
         bar.textContent="";
-        bar.insertAdjacentHTML('afterbegin','A heart! You regained '+data.hp_gain+' health points');
+        bar.insertAdjacentHTML('afterbegin','A heart! You regained '+data.hp_gain+' health point');
     });
 
-    socket.on("update_health_good2", function(data){
+    // Pareil J2
+    socket.on("update_health_good2", function(data){   
         console.log("Heart!");
-        player_health=data.health
-        var hp = document.getElementById("health_points_2");
-        hp.innerHTML="Health : " + player_health +"/100";
+        update_health(2,data.health)
         var bar = document.getElementById("status_bar_2");
         bar.textContent="";
-        bar.insertAdjacentHTML('afterbegin','A heart! You regained '+data.hp_gain+' health points');
+        bar.insertAdjacentHTML('afterbegin','A heart! You regained '+data.hp_gain+' health point');
 
 
     });
 
-    socket.on("monster_response",function(datas){
+    // Actualisation position des monstres sur frontend
+    socket.on("monster_response",function(datas){    
         for(var data of datas){
         console.log(data)
                 for( let k=0; k<2; k++){
-                    var cell_id = "cell " + data[k].i + "-" + data[k].j;
+                    var cell_id = "cell " + data[0][k].i + "-" + data[0][k].j;
                     var span_to_modif = document.getElementById(cell_id);
-                    span_to_modif.textContent = data[k].content;            
+                    span_to_modif.textContent = data[0][k].content;            
                 }
         }
         
     });
 
-    socket.on("level_up",function(data){
-        var bar = document.getElementById("level");
-        bar.textContent=" Level " +data.level;
+    // Requête au serveur de changer de niveau
+    socket.on("level_up",function(data){             
+        socket.emit("new_game", {level:data.level});
 
     });
 
-    socket.on("change_map", function(data){
-        var map = data.map
-        var nrow = data.n_rows
-        var ncol = data.n_columns
-        for ( let i=0; i<nrow; i++){
-            for(let j=0; j<ncol; j++){
-                var cell_id = "cell " + i + "-" + j;
-                    var span_to_modif = document.getElementById(cell_id);
-                    span_to_modif.textContent = map[i][j];      
-            }
-        } 
-    })
+    socket.on("reload_map", function(data){        
+        console.log("CHANGE MAP");
+        document.location.reload();
 
-    socket.on("game_over_1",function(data){
+        
+    });
+
+    // Actualisation de toutes les informations du frontend (s'éxecute périodiquement)
+    socket.on("update_all",function(data){     
+        console.log("update");
+        var bar = document.getElementById("level");
+        if (data.level == 1){
+            obj=10
+        }
+        if (data.level == 2){
+            obj=40
+        }
+        if (data.level==3){
+            obj= 100
+        }
+        bar.textContent=" Level " +data.level+ ' : Collect a total of '+obj+' bananas';
+        var bn1 = document.getElementById("bananas_1");
+        bn1.innerHTML="Bananas : " + data.bananas1 + " &#x1F34C;";
+        var bn2 = document.getElementById("bananas_2");
+        bn2.innerHTML="Bananas : " + data.bananas2 + " &#x1F34C;";
+        update_health(1,data.health1)
+        update_health(2,data.health2)
+    });
+
+     //Message de fin
+    socket.on("game_over_1",function(data){ 
         console.log("Game over player 1");
         death="Player 1";
-        if (data.health2==0){
+        if (data.health2==0){  // Au cas où J2 aurait aussi perdu en même temps (ex: rencontre entre joueurs)
             death="Both players";
         }
-        var end=document.getElementById("game_over");
+        var end=document.getElementById("game_over"); //Effacement de toute l'interface frontend
         end.textContent="";
-        end.insertAdjacentHTML('afterbegin','<h2><div class="game_over_screen"><h1> <div class= "end_message">Game over <br><br>' + death + ' died !</div></h1><h3> <div class= "player_1_results"> <h2><div id= "player_1_profile"> Player 1:</div></h2><div id= "player_1_health"> Remaining health : ' + data.health1 + '</div><div id= "player_1_bananas">Bananas : ' + data.bananas1 + '</div></div><div id= "player_2_results"><h2><div id= "player_2_profile"> Player 2:</div></h2><div id= "player_2_health"> Remaining health : ' + data.health2 + '</div> <div id= "player_2_bananas">Bananas : ' + data.bananas2 + '</div></div> </h3> </div></h2>');
+        end.insertAdjacentHTML('afterbegin','<h2><div class="game_over_screen"><h1> <div class= "end_message">Game over <br><br>' + death + ' died</div></h1><h3> <div class= "player_1_results"> <h2><div id= "player_1_profile"> Player 1 &#128053 :</div></h2><div id= "player_1_health"> Remaining health : ' + data.health1 + '</div><div id= "player_1_bananas">Bananas : ' + data.bananas1 + '</div></div><div class= "player_2_results"><h2><div id= "player_2_profile"> Player 2 &#128056 :</div></h2><div id= "player_2_health"> Remaining health : ' + data.health2 + '</div> <div id= "player_2_bananas">Bananas : ' + data.bananas2 + '</div></div> </h3> </div></h2>');
+        //On réécrit le HTML pour afficher les scores finaux
     });
 
-    socket.on("game_over_2",function(data){
+    //Pareil pour J2
+    socket.on("game_over_2",function(data){ 
         console.log("Game over player 2");
         death="Player 2";
         if (data.health1==0){
@@ -216,16 +241,30 @@ window.addEventListener("DOMContentLoaded", (event) => {
         }
         var end=document.getElementById("game_over");
         end.textContent="";
-        end.insertAdjacentHTML('afterbegin','<h2><div class="game_over_screen"><h1> <div class= "end_message">Game over <br><br>' + death +' died !</div></h1><h3> <div class= "player_1_results"> <h2><div id= "player_1_profile"> Player 1:</div></h2><div id= "player_1_health"> Remaining health : ' + data.health1 + '</div><div id= "player_1_bananas">Bananas : ' + data.bananas1 + '</div></div><div id= "player_2_results"><h2><div id= "player_2_profile"> Player 2:</div></h2><div id= "player_2_health"> Remaining health : ' + data.health2 + '</div> <div id= "player_2_bananas">Bananas : ' + data.bananas2 + '</div></div> </h3> </div></h2>');
+        end.insertAdjacentHTML('afterbegin','<h2><div class="game_over_screen"><h1> <div class= "end_message">Game over <br><br>' + death +' died</div></h1><h3> <div class= "player_1_results"> <h2><div id= "player_1_profile"> Player 1 &#128053 :</div></h2><div id= "player_1_health"> Remaining health : ' + data.health1 + '</div><div id= "player_1_bananas">Bananas : ' + data.bananas1 + '</div></div><div class= "player_2_results"><h2><div id= "player_2_profile"> Player 2 &#128056 :</div></h2><div id= "player_2_health"> Remaining health : ' + data.health2 + '</div> <div id= "player_2_bananas">Bananas : ' + data.bananas2 + '</div></div> </h3> </div></h2>');
     });
 
-    function update_health(player_id, data){
-        player_health = data.health;
+    //Message victoire (niveau 3 complété)
+    socket.on("win",function(data){  
+        console.log("Victory!");
+        winner="Both players";
+        if (data.bananas1>data.bananas2){
+            winner="Player 1"
+        }
+        if (data.bananas2>data.bananas1){
+            winner="Player 2"
+        }
+        var end=document.getElementById("game_over"); //On efface tout puis on réécrit
+        end.textContent="";
+        end.insertAdjacentHTML('afterbegin','<h2><div class="game_over_screen"><h1> <div class= "end_message">Well played! <br><br>' + winner +' won !</div></h1><h3> <div class= "player_1_results"> <h2><div id= "player_1_profile"> Player 1 &#128053 :</div></h2><div id= "player_1_health"> Remaining health : ' + data.health1 + '</div><div id= "player_1_bananas">Bananas : ' + data.bananas1 + '</div></div><div class= "player_2_results"><h2><div id= "player_2_profile"> Player 2 &#128056 :</div></h2><div id= "player_2_health"> Remaining health : ' + data.health2 + '</div> <div id= "player_2_bananas">Bananas : ' + data.bananas2 + '</div></div> </h3> </div></h2>');
+    });
+
+    //Actualise les PV sur le frontend
+    function update_health(player_id, health){ 
         var id_HTML = "health_points_" + String(player_id);
         var hp = document.getElementById(id_HTML);
-        var i = player_health%10;
         var hp_car = "Health : ";
-        for (var j=0; j<i; j++){
+        for (var j=0; j<health; j++){
             hp_car = hp_car + "&#128150;";
         }
         hp.innerHTML = hp_car;

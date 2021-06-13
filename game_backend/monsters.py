@@ -8,8 +8,8 @@ class Monsters:
         self._y = None
         self._dx = None
         self._dy = None
-        self.step_on = chr(0x1F532)	
-        self.previous_step_on = chr(0x1F532)	
+        self.step_on = chr(0x1F532)	#sol
+        self.previous_step_on = chr(0x1F532)  #sol	
 
     def initPos(self, _map,  height, width):
         '''
@@ -49,21 +49,24 @@ class Monsters:
             new_x = self._x + self._dx
 
             #test si on peut bien déplacer le monstre dans cette direction
-            if _map[new_y][new_x] == chr(0x1F532):
+            self._step_on = _map[new_y][new_x]
+            if (self._step_on != chr(0x1F47B)) and (self._step_on != chr(0x1F4E6)) : #mouvement possible tant qu'il n'avance pas sur un autre monstre ou dans un mur
+                player_hit=0  #aucun joueur touché (pour le moment)
                 move_allowed =True
-                if _map[self._y][self._x] == chr(0x1F435):
-                    leave_behind=chr(0x1F435)
-                if _map[self._y][self._x] == chr(0x1F438):
-                    leave_behind=chr(0x1F438)
-                else:
-                    leave_behind=chr(0x1F532)
-                _map[new_y][new_x] = chr(0x1F47B)
-                _map[self._y][self._x] = leave_behind	
-                data = [{"i": f"{self._y}", "j":f"{self._x}", "content":leave_behind}, {"i": f"{new_y}", "j":f"{new_x}", "content":chr(0x1F47B)}]
+                if (self._step_on == chr(0x1F435)): #J1
+                    player_hit=1  #J1 touché
+                    self.previous_step_on=chr(0x1F532) #laisse derrière lui le sol
+                if (self._step_on == chr(0x1F438)): #J2
+                    player_hit=2 #J2 touché
+                    self.previous_step_on=chr(0x1F532) 
+                _map[self._y][self._x]= self.previous_step_on  #laisse derrière lui ce qu'il avait trouvé
+                _map[new_y][new_x] = chr(0x1F47B)  #monstre	
+                data = [{"i": f"{self._y}", "j":f"{self._x}", "content":self.previous_step_on}, {"i": f"{new_y}", "j":f"{new_x}", "content":chr(0x1F47B)}]
                 self._x = new_x
                 self._y = new_y
+                self.previous_step_on=self._step_on
 
-        return data
+        return data,player_hit
        
     def get_pos(self):
         return (self._x,self._y)

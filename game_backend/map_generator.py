@@ -19,7 +19,7 @@ CHARACTER_TILES = {'stone': chr(0x1F4E6),
                     'wall': chr(0x1F4E6)}
 
 class Generator():
-    def __init__(self, width=64, height=64, max_rooms=15, min_room_xy=5, max_room_xy=10, rooms_overlap=False, random_connections=1,random_spurs=3, tiles=CHARACTER_TILES):
+    def __init__(self, width=50, height=28, max_rooms=15, min_room_xy=5, max_room_xy=10, rooms_overlap=False, random_connections=1,random_spurs=3, tiles=CHARACTER_TILES):
         self.width = width
         self.height = height
         self.max_rooms = max_rooms
@@ -44,6 +44,7 @@ class Generator():
         return monsters
 
     def gen_item(self, number_bananas, number_hearts,game):
+        #Création de banenes et de coeurs sur la carte
         items=[]
         for i in range(number_bananas):
             banana=Items(symbol=chr(0x1F34C))
