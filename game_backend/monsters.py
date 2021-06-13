@@ -11,7 +11,7 @@ class Monsters:
         self.step_on = chr(0x1F532)	
         self.previous_step_on = chr(0x1F532)	
 
-    def initPos(self, _map,  height, width, player):
+    def initPos(self, _map,  height, width):
         '''
         Position initiale du monstre qui doit être dans la grille hors des murs
         '''
@@ -24,7 +24,7 @@ class Monsters:
                 break
         self._x = x_init
         self._y = y_init
-        _map[self._y][self._x] = chr(0x1F532)
+        _map[self._y][self._x] = chr(0x1F47B)
     
     def move_monsters(self, _map):
         move_allowed = False
@@ -51,9 +51,15 @@ class Monsters:
             #test si on peut bien déplacer le monstre dans cette direction
             if _map[new_y][new_x] == chr(0x1F532):
                 move_allowed =True
+                if _map[self._y][self._x] == chr(0x1F435):
+                    leave_behind=chr(0x1F435)
+                if _map[self._y][self._x] == chr(0x1F438):
+                    leave_behind=chr(0x1F438)
+                else:
+                    leave_behind=chr(0x1F532)
                 _map[new_y][new_x] = chr(0x1F47B)
-                _map[self._y][self._x] = chr(0x1F532)	
-                data = [{"i": f"{self._y}", "j":f"{self._x}", "content":chr(0x1F532)	}, {"i": f"{new_y}", "j":f"{new_x}", "content":chr(0x1F47B)}]
+                _map[self._y][self._x] = leave_behind	
+                data = [{"i": f"{self._y}", "j":f"{self._x}", "content":leave_behind}, {"i": f"{new_y}", "j":f"{new_x}", "content":chr(0x1F47B)}]
                 self._x = new_x
                 self._y = new_y
 

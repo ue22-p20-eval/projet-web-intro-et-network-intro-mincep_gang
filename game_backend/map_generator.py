@@ -34,22 +34,27 @@ class Generator():
         self.corridor_list = []
         self.tiles_level = []
 
-    def gen_monster(self,game):
+    def gen_monster(self, nb_monsters, game):
         #Création des monstres sur la carte
         monsters=[]
-        for i in range(10):
+        for i in range(nb_monsters):
             monster=Monsters(symbol=chr(0x1F47B))
-            monster.initPos(game._map, game.height, game.width, game._player)
+            monster.initPos(game._map, game.height, game.width)
             monsters.append(monster)
         return monsters
 
-    def gen_item(self,game):
+    def gen_item(self, nb_bananas, nb_hearts,game):
         items=[]
-        for i in range(20):
-            item=Items(symbol=chr(0x1F34C))
-            item.initPos(game._map, game.height, game.width, game._player)
-            items.append(item)
+        for i in range(nb_bananas):
+            banana=Items(symbol=chr(0x1F34C))
+            banana.initPos(game._map, game.height, game.width)
+            items.append(banana)
+        for i in range(nb_hearts):
+            heart=Items(symbol=chr(0x1F496))
+            heart.initPos(game._map, game.height, game.width)
+            items.append(heart)
         return items
+    
 
     
     def gen_room(self):

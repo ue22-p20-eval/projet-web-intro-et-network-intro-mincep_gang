@@ -7,9 +7,9 @@ class Items:
         self._x = None
         self._y = None
 
-    def initPos(self, _map,  height, width, player):
+    def initPos(self, _map,  height, width):
         '''
-        Position initiale du monstre qui doit être dans la grille hors des murs
+        Position initiale de l'item qui doit être dans la grille hors des murs
         '''
         found = False
         while found is False:

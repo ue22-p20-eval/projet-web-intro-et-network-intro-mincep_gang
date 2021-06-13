@@ -4,25 +4,31 @@ from .monsters import Monsters
 
 
 class Game:
-    def __init__(self, width=96, height=32):
+    def __init__(self, width=53, height=28):
         self._generator = Generator(width=width, height=height)
         self._generator.gen_level()
         self._generator.gen_tiles_level()
         self._map = self._generator.tiles_level
 
-        self._player = Player(symbol=chr(0x1F435))
-        self._player.initPos( self._map )
+        self._player1 = Player(symbol=chr(0x1F435))
+        self._player1.initPos( self._map )
+        self._player2= Player(symbol=chr(0x1F438))
+        self._player2.initPos( self._map )
         self.height = self._generator.height
         self.width = self._generator.width
         #monstres
-        self._Monsters = self._generator.gen_monster(self)
-        self._Items= self._generator.gen_item(self)
+        self._Monsters = self._generator.gen_monster(20,self)
+        self._Items= self._generator.gen_item(20,10,self)
 
     def getMap(self):
         return self._map
 
-    def move(self, dx, dy):
-        return self._player.move(dx, dy, self._map)
+    def move_1(self, dx, dy):
+        return self._player1.move(dx, dy, self._map)
+
+    def move_2(self, dx, dy):
+        return self._player2.move(dx, dy, self._map)
+
 
     def update_monster(self):
         datas=[]
@@ -33,7 +39,18 @@ class Game:
             datas.append(data)
         return datas
 
-    def get_player_health(self) :
+    def players_shock(self,player,dx,dy):
+        if player== self._player1:
+            data2=self._player2.move(dx,dy,self._map)
+            data1=self._player1.move(-dx,-dy,self._map)
+        else:
+            data1=self._player1.move(dx,dy,self._map)
+            data2=self._player2.move(-dx,-dy,self._map)
+
+        return [data1[0], data2[0]]
+
+
+    """ def get_player_health(self) :
         return self._player.get_health_points()
     
     def conflict(self):
@@ -44,4 +61,4 @@ class Game:
                 conflicts.append(monster)
         return conflicts
     def get_monsters(self):
-        return self._Monsters
+        return self._Monsters"""
