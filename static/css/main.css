@@ -50,6 +50,11 @@ body{
     color: rgb(77, 7, 80);
 }
 
+#level{
+    font-family: fantasy;
+    color: black;
+}
+
 .information_2{
     grid-column: 3;
     grid-row: 1;

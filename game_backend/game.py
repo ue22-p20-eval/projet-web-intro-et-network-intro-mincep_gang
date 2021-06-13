@@ -4,7 +4,7 @@ from .monsters import Monsters
 
 
 class Game:
-    def __init__(self, width=53, height=28):
+    def __init__(self, width=53, height=28,number_monsters=20,number_bananas=20,number_hearts=10):
         self._generator = Generator(width=width, height=height)
         self._generator.gen_level()
         self._generator.gen_tiles_level()
@@ -17,8 +17,8 @@ class Game:
         self.height = self._generator.height
         self.width = self._generator.width
         #monstres
-        self._Monsters = self._generator.gen_monster(20,self)
-        self._Items= self._generator.gen_item(20,10,self)
+        self._Monsters = self._generator.gen_monster(number_monsters,self)
+        self._Items= self._generator.gen_item(number_bananas,number_hearts,self)
 
     def getMap(self):
         return self._map

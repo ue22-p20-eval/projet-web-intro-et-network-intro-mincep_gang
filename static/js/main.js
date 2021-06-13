@@ -184,6 +184,12 @@ window.addEventListener("DOMContentLoaded", (event) => {
         
     });
 
+    socket.on("level_up",function(data){
+        var bar = document.getElementById("level");
+        bar.textContent=" Level " +data.level;
+
+    });
+
     socket.on("game_over_1",function(data){
         console.log("Game over player 1");
         death="Player 1";

@@ -9,7 +9,11 @@ import random
 
 app = Flask(__name__)
 socketio = SocketIO(app)
-game = Game()
+
+levels=[[2,2,1],[5,5,1],[1,1,3]]
+nb_monsters, nb_bananas, nb_hearts= levels[0]
+game = Game(number_monsters=nb_monsters,number_bananas=nb_bananas,number_hearts=nb_hearts)
+
 
 
 def request_waiter():
@@ -57,6 +61,7 @@ def request_waiter():
     
     @socketio.on("move2")
     def on_move_msg(json, methods=["GET", "POST"]):
+
         print("player 2 moves")
         dx = json['dx']
         dy = json["dy"]
@@ -91,8 +96,18 @@ def request_waiter():
                 socketio.emit("RAS2",data)
         print("health2", player_health)
 
+    @socketio.on("new_game")
+    def on_move_msg(json, methods=["GET", "POST"]):
+        nb_monsters, nb_bananas, nb_hearts= levels[json['level']-1]
+        game = Game(number_monsters=nb_monsters,number_bananas=nb_bananas,number_hearts=nb_hearts)
+        map = game.getMap()
+        return render_template("index.html", mapdata=map, n_row=len(map), n_col=len(map[0]))
+        socketio.run(app, port=5001)
+
+
 
 def periodic_event():    
+    level=1
     while True:  
         print("ok")
         data_monstres=game.update_monster()
@@ -101,6 +116,16 @@ def periodic_event():
             socketio.emit("game_over_1",{"bananas1": game._player1.bananas, "bananas2": game._player2.bananas,"health1":game._player1.health_points,"health2":0})
         if game._player2.health_points==0:
             socketio.emit("game_over_2",{"bananas1": game._player1.bananas, "bananas2": game._player2.bananas,"health1":game._player1.health_points,"health2":0})
+        if game._player1.bananas+game._player2.bananas==nb_bananas:
+            level+=1
+            if level==4:
+                socketio.emit("win",{"bananas1": game._player1.bananas, "bananas2": game._player2.bananas,"health1":game._player1.health_points,"health2":0})
+            else:
+                print("level up!")
+                socketio.emit("level_up",{"level":level})
+                socketio.emit("new_game",{"level":level})
+            
+
         time.sleep(1.5)
 
 
