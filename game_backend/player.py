@@ -17,7 +17,7 @@ class Player:
         while found is False:
             y_init += 1
             for i,c in enumerate(_map[y_init]):
-                if c == chr(0x1F532)	:
+                if c == chr(0x2B1C)	:
                     x_init = i
                     found = True
                     break
@@ -51,8 +51,8 @@ class Player:
                 hp_gain=1
                 self.health_points=min(20, self.health_points + hp_gain)
             map[new_y][new_x] = self._symbol
-            map[self._y][self._x] = chr(0x1F532)  #sol	
-            data = [{"i": f"{self._y}", "j":f"{self._x}", "content":chr(0x1F532)	}, {"i": f"{new_y}", "j":f"{new_x}", "content":self._symbol}]
+            map[self._y][self._x] = chr(0x2B1C)  #sol	
+            data = [{"i": f"{self._y}", "j":f"{self._x}", "content":chr(0x2B1C)	}, {"i": f"{new_y}", "j":f"{new_x}", "content":self._symbol}]
             self._x = new_x
             self._y = new_y
         
