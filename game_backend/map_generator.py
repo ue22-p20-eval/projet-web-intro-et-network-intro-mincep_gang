@@ -15,7 +15,7 @@ import random
 
 
 CHARACTER_TILES = {'stone': chr(0x1F4E6),
-                    'floor':chr(0x1F532),
+                    'floor':chr(0x2B1C),
                     'wall': chr(0x1F4E6)}
 
 class Generator():

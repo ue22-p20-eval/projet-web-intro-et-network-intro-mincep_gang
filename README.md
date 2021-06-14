@@ -8,12 +8,28 @@
 
 Tout ce qui est marqué dans `requirement.txt`
 
+Si vous avez des problèmes avec votre navigateur, essayez Google Chrome
+
 ## A propos du gameplay
 
+J1: Flèches directionnelles
+
+J2: Z-Q-S-D
+
 Le jeu est en multijoueur (local) et se compose de 3 niveaux successifs.
+
 Chaque niveau est completé en ramassant (à deux) le nombre requis de bananes.
-Les joueurs sont en compétition et se blessent violement au moindre contact.
-Le nombre de PV est élevé, pour pouvoir terminer le jeu.
+
+Le nombre de PV est élevé, pour pouvoir terminer le jeu facilement.
+
+Chaque joueur possède une barre d'état, qui l'informe du dernier évènement qui lui est arrivé.
+
+Les joueurs sont en compétition, et ont donc deux façons de triompher de leur adversaire:
+
+* Finir les 3 niveaux en ayant ramassé plus de bananes que l'autre
+* Faire en sorte que l'autre meure avant soi. On peut pour ceci rentrer en contact avec lui pour le pousser sur les fantômes (chacun perdra aussi 2 PV)
+  
+NB: Les deux joueurs gagnent s'ils meurent en même temps ou ont le même nombre de bananes à la fin du 3ème niveau.
 
 ## Rogue nethack with Flask
 
