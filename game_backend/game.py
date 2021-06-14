@@ -4,7 +4,7 @@ from .monsters import Monsters
 
 
 class Game:
-    def __init__(self, width=53, height=28,number_monsters=20,number_bananas=20,number_hearts=10):
+    def __init__(self, width=50, height=28,number_monsters=20,number_bananas=20,number_hearts=10):
         self._generator = Generator(width=width, height=height)
         self._generator.gen_level()
         self._generator.gen_tiles_level()
@@ -23,14 +23,14 @@ class Game:
     def getMap(self):
         return self._map
 
-    def move_1(self, dx, dy):
+    def move_1(self, dx, dy):  
         return self._player1.move(dx, dy, self._map)
 
     def move_2(self, dx, dy):
         return self._player2.move(dx, dy, self._map)
 
 
-    def update_monster(self):
+    def update_monster(self):  #fait bouger tous les monstres d'une case
         datas=[]
         monsters = self._Monsters
         for i in range(len(monsters)):
@@ -39,7 +39,7 @@ class Game:
             datas.append(data)
         return datas
 
-    def players_shock(self,player,dx,dy):
+    def players_shock(self,player,dx,dy):  #quand les 2 joueurs se rencontrent, ils sont propulsés dans des directions opposées
         if player== self._player1:
             data2=self._player2.move(dx,dy,self._map)
             data1=self._player1.move(-dx,-dy,self._map)
@@ -47,18 +47,4 @@ class Game:
             data1=self._player1.move(dx,dy,self._map)
             data2=self._player2.move(-dx,-dy,self._map)
 
-        return [data1[0], data2[0]]
-
-
-    """ def get_player_health(self) :
-        return self._player.get_health_points()
-    
-    def conflict(self):
-        conflicts=[]
-        for monster in self._Monsters:
-            if  (monster._x,monster._y) ==(self._player._x,self._player._y):
-                print("conflit!!!")
-                conflicts.append(monster)
-        return conflicts
-    def get_monsters(self):
-        return self._Monsters"""
+        return [data1[0], data2[0]]  #contient l'information de ce que les joueurs ont croisé pendant le choc

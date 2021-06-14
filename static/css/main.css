@@ -32,6 +32,7 @@ body{
 .information{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-template-rows:25%;
     grid-gap: 0.1px;
 }
 
@@ -42,8 +43,6 @@ body{
     grid-column: 1;
     grid-row: 1;
     text-align: center;
-    margin-top: auto;
-    margin-bottom: auto;
 }
 
 .information_2{
@@ -53,8 +52,6 @@ body{
     grid-column: 3;
     grid-row: 1;
     text-align: center;
-    margin-top: auto;
-    margin-bottom: auto;
 }
 
 #player_1{
@@ -77,7 +74,7 @@ body{
 
 .title{
     font-family: 'munthills';
-    font-size: 40px;
+    font-size: 25px;
     text-align: center;
     color: orange;
     grid-column: 2;
@@ -88,21 +85,11 @@ body{
 #subtitle{
     font-family: 'montheavy';
     font-size: 20px;
+    transform: rotate(8 deg);
     color: rgb(77, 7, 80);
     margin-top: -50px;
 }
 
-#level{
-    font-family: fantasy;
-    color: black;
-}
-
-.information_2{
-    grid-column: 3;
-    grid-row: 1;
-    ;text-align: center;
-
-}
 .keypad_btn{
     background-color: rgb(247, 4, 4);
     opacity: 0.75;
@@ -116,9 +103,9 @@ body{
     grid-gap: 10px;
 }
 
-.end_messsage{
+.end_message{
     font-family: 'munthills';
-    font-size: 25px;
+    font-size: 60px;
     text-align: center;
     grid-column:2;
     grid-row:1;
@@ -126,11 +113,18 @@ body{
 }
 
 .player_1_results{
+    font-family: Impact;
+    color :#731f1f;
     grid-column:1;
     grid-row:2;
+
 }
+    
+    
 
 .player_2_results{
+    color: green;
+    font-family: Impact;
     grid-column:3;
     grid-row:2;
 }
