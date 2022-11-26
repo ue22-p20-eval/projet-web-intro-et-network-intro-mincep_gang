@@ -9,16 +9,17 @@
 # work. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 
 from __future__ import print_function
+from .monsters import Monsters
+from .items import Items
 import random
 
-CHARACTER_TILES = {'stone': '#',
 
-                    'floor': '.',
-
-                    'wall': '#'}
+CHARACTER_TILES = {'stone': chr(0x1F4E6),
+                    'floor':chr(0x2B1C),
+                    'wall': chr(0x1F4E6)}
 
 class Generator():
-    def __init__(self, width=64, height=64, max_rooms=15, min_room_xy=5, max_room_xy=10, rooms_overlap=False, random_connections=1,random_spurs=3, tiles=CHARACTER_TILES):
+    def __init__(self, width=50, height=28, max_rooms=15, min_room_xy=5, max_room_xy=10, rooms_overlap=False, random_connections=1,random_spurs=3, tiles=CHARACTER_TILES):
         self.width = width
         self.height = height
         self.max_rooms = max_rooms
@@ -32,6 +33,30 @@ class Generator():
         self.room_list = []
         self.corridor_list = []
         self.tiles_level = []
+
+    def gen_monster(self, number_monsters, game):
+        #Création des monstres sur la carte
+        monsters=[]
+        for i in range(number_monsters):
+            monster=Monsters(symbol=chr(0x1F47B))
+            monster.initPos(game._map, game.height, game.width)
+            monsters.append(monster)
+        return monsters
+
+    def gen_item(self, number_bananas, number_hearts,game):
+        #Création de banenes et de coeurs sur la carte
+        items=[]
+        for i in range(number_bananas):
+            banana=Items(symbol=chr(0x1F34C))
+            banana.initPos(game._map, game.height, game.width)
+            items.append(banana)
+        for i in range(number_hearts):
+            heart=Items(symbol=chr(0x1F496))
+            heart.initPos(game._map, game.height, game.width)
+            items.append(heart)
+        return items
+    
+
     
     def gen_room(self):
         x, y, w, h = 0, 0, 0, 0
@@ -244,6 +269,8 @@ class Generator():
         #print('Room List: ', self.room_list)
         #print('\nCorridor List: ', self.corridor_list)
         #[print(row) for row in self.tiles_level]
+
+
 
 if __name__ == '__main__':
     gen = Generator()

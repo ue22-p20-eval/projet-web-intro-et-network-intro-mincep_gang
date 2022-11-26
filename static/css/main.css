@@ -1,6 +1,11 @@
+@font-face{font-family: 'montlight';src: url(../fonts/Mont-ExtraLightDEMO.otf)}
+@font-face{font-family: 'montheavy';src: url(../fonts/Mont-HeavyDEMO.otf)}
+@font-face{font-family: 'munthills';src: url(../fonts/Mount_Hills.otf)}
+
 body{
-    background-color: slategray;
+    background-color: white;
 }
+
 
 .flexbox{
     display: flex;
@@ -8,7 +13,7 @@ body{
     align-items: center;
 }
 
-.thekeypad{
+.thekeypad_1{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: 35px;
@@ -16,8 +21,110 @@ body{
     max-width:120px;
 }
 
+.thekeypad_2{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 35px;
+    grid-gap: 5px;
+    max-width:120px;
+    grid-column: 3;
+}
+.information{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows:25%;
+    grid-gap: 0.1px;
+}
+
+.information_1{
+    font-family: 'montlight';
+    font-size: 15px;
+    color: rgb(77, 7, 80);
+    grid-column: 1;
+    grid-row: 1;
+    text-align: center;
+}
+
+.information_2{
+    font-family: 'montlight';
+    font-size: 15px;
+    color: rgb(77, 7, 80);
+    grid-column: 3;
+    grid-row: 1;
+    text-align: center;
+}
+
+#player_1{
+    font-family: 'montheavy';
+    font-size: 20px;
+    color: #731f1f;
+    grid-column: 1;
+    grid-row: 1;
+    text-align: center;
+}
+
+#player_2{
+    font-family: 'montheavy';
+    font-size: 20px;
+    color: green;
+    grid-column: 3;
+    grid-row: 1;
+    text-align: center;
+}
+
+.title{
+    font-family: 'munthills';
+    font-size: 25px;
+    text-align: center;
+    color: orange;
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: center;
+
+}
+#subtitle{
+    font-family: 'montheavy';
+    font-size: 20px;
+    transform: rotate(8 deg);
+    color: rgb(77, 7, 80);
+    margin-top: -50px;
+}
+
 .keypad_btn{
-    background-color: black;
+    background-color: rgb(247, 4, 4);
     opacity: 0.75;
-    color: cyan;
+    color: rgb(255, 255, 255);
+}
+
+.game_over_screen{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: 10px;
+}
+
+.end_message{
+    font-family: 'munthills';
+    font-size: 60px;
+    text-align: center;
+    grid-column:2;
+    grid-row:1;
+    color: rgb(13, 49, 31);
+}
+
+.player_1_results{
+    font-family: Impact;
+    color :#731f1f;
+    grid-column:1;
+    grid-row:2;
+
+}
+    
+    
+
+.player_2_results{
+    color: green;
+    font-family: Impact;
+    grid-column:3;
+    grid-row:2;
 }
